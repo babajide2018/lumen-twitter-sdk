@@ -1,0 +1,187 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "User Subscription",
+        "description": "Your API description",
+        "contact": {
+            "name": "Your Name",
+            "url": "https://example.com",
+            "email": "contact@example.com"
+        },
+        "license": {
+            "name": "Your License",
+            "url": "https://example.com/license"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/subscribe-channel": {
+            "post": {
+                "tags": [
+                    "Channel Subscriptions"
+                ],
+                "summary": "Subscribe users to a channel or chat",
+                "description": "Subscribe users to a channel or chat.",
+                "operationId": "0ddbce052401edc7b2b35c705f033ee3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 123
+                                    },
+                                    "channel_name": {
+                                        "type": "string",
+                                        "example": "general"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User subscribed to channel",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User subscribed to channel"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/send-message": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Send messages to subscribers",
+                "description": "Send messages to subscribers.",
+                "operationId": "15424513e7fd7e1663c6dcb917639da3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 123
+                                    },
+                                    "message": {
+                                        "type": "string",
+                                        "example": "Hello, subscribers!"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Message sent to subscribers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message sent to subscribers"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/subscribe": {
+            "post": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Subscribe users to a chat bot",
+                "description": "Subscribe users to a chat bot.",
+                "operationId": "5e39171fb76a278500ff2c0aa029ce2d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 123
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User subscribed to chat bot",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User subscribed to chat bot"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/webhook": {
+            "post": {
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Handle webhooks",
+                "description": "Handle webhooks to receive responses from the messenger API.",
+                "operationId": "a52674d0958cb262bc2af6137c11073b",
+                "responses": {
+                    "200": {
+                        "description": "Webhook handled successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Webhook handled successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
