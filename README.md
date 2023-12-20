@@ -83,5 +83,3 @@ Author
 
 Name: Ojo Babajide Joshua (geenius@zyrocs.com)
 email: ojobabajide2018@gmail.com
-
-Feel free to customize this README according to your project's structure and add more sections as needed.
