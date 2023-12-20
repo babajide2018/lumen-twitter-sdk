@@ -31,6 +31,8 @@ Access the Swagger UI at /api/documentation to explore the API.
 Database Migrations
 
 
+To serve the app: php -S localhost:8000 -t public
+
 ![Alt text](image.png)
 
 The database migrations are located in the database/migrations directory. Run the following command to apply migrations:
