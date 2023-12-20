@@ -22,7 +22,7 @@ class ChannelSubscriptionController extends BaseController
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="user_id", type="integer", example=123),
+     *             @OA\Property(property="user_id", type="integer", example=80000000800080008000000000000008),
      *             @OA\Property(property="channel_name", type="string", example="general"),
      *         )
      *     ),

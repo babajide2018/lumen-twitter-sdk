@@ -31,7 +31,7 @@
                                 "properties": {
                                     "user_id": {
                                         "type": "integer",
-                                        "example": 123
+                                        "example": 9223372036854775807
                                     },
                                     "channel_name": {
                                         "type": "string",

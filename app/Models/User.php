@@ -22,6 +22,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'name', 'email',
     ];
 
+    protected $keyType = 'uuid';
+    public $incrementing = false;
+    protected $primaryKey = 'id';
+
     /**
      * The attributes excluded from the model's JSON form.
      *
