@@ -1,6 +1,8 @@
 <?php
 
+
 namespace App\Api\V1\Controllers;
+
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;

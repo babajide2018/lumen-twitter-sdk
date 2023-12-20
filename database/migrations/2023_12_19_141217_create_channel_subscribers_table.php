@@ -9,23 +9,26 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('subscribers', function (Blueprint $table) {
+        Schema::create('channel_subscribers', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
             $table->unsignedBigInteger('user_id');
-            // Add other columns as needed
+            $table->string('channel_name');
             $table->timestamps();
+
+            // Add other columns as needed
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscribers');
+        Schema::dropIfExists('channel_subscribers');
     }
 };

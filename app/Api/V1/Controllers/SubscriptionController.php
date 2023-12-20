@@ -7,71 +7,84 @@ use Illuminate\Http\Request;
 use Atymic\Twitter\Twitter as TwitterSDK;
 
 
+
 /**
  * @OA\Info(
- *     title="User Subscription",
+ *     title="Communications Microservice - (Twitter channel)",
  *     version="1.0",
- *     description="Your API description",
+ *     description="You need to write a REST API microservice. <br>
+    You need use Lumen + Swagger + Twitter SDK <br>
+    https://github.com/laravel/lumen.git <br>
+    https://github.com/DarkaOnLine/SwaggerLume <br>
+    https://github.com/atymic/twitter <br>
+    It is necessary to integrate Twitter SDK into our REST API microservice. <br>
+    We import one of the SDK to choose from those listed below. <br>
+    We implement all the logic as much as possible with the built-in functionality of Lumen",
  *     @OA\Contact(
- *         email="contact@example.com",
- *         name="Your Name",
- *         url="https://example.com"
+ *         email="ojobabajide2018@gmail.com",
+ *         name="Ojo Babajide Joshua",
+ *         url="https://geenius.zyrocs.com"
  *     ),
  *     @OA\License(
  *         name="Your License",
- *         url="https://example.com/license"
+ *         url="https://geenius.zyrocs.com"
  *     )
  * )
  */
+
 class SubscriptionController extends BaseController
 {
     /**
-     * Subscribe users to a chat bot.
-     *
-     * @param  Request  $request
-     * @bodyParam  int  $user_id  The ID of the user. Example: 123
-     *
-     * @return \Illuminate\Http\JsonResponse
-     * @OA\Post(
-     *     path="/subscribe",
-     *     summary="Subscribe users to a chat bot",
-     *     tags={"Subscriptions"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="user_id", type="integer", example=123),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="User subscribed to chat bot",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="User subscribed to chat bot"),
-     *         )
-     *     ),
-     * )
-     */
+ * @OA\Post(
+ *     path="/subscribe-to-chatbot",
+ *     summary="Subscribe users to a Twitter chatbot",
+ *     operationId="subscribeToChatBot",
+ *     tags={"Subscription"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         description="User ID",
+ *         @OA\JsonContent(
+ *             required={"user_id"},
+ *             @OA\Property(property="user_id", type="integer", example=123)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="User subscribed to Twitter chatbot",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="User subscribed to Twitter chatbot")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Internal Server Error"
+ *     )
+ * )
+ */
     public function subscribeToChatBot(Request $request)
     {
-        // Validate the request
-        $request->validate([
-            'user_id' => 'required|integer',
-        ]);
+        $userId = $request->input('user_id');
 
-        // Check if the user is already subscribed (you might want to adjust this based on your database schema)
-        $userIsSubscribed = Subscriber::where('user_id', $request->input('user_id'))->exists();
+        // Your Twitter subscription logic here
+        try {
+            // Initialize Twitter SDK
+            $twitter = new TwitterSDK([
+                'key' => env('TWITTER_API_KEY'),
+                'secret' => env('TWITTER_API_SECRET'),
+                'token' => env('TWITTER_ACCESS_TOKEN'),
+                'token_secret' => env('TWITTER_ACCESS_TOKEN_SECRET'),
+            ]);
 
-        if ($userIsSubscribed) {
-            return response()->json(['message' => 'User is already subscribed to chat bot']);
+            // Subscribe user to the Twitter chatbot
+            $twitter->post('friendships/create', [
+                'user_id' => $userId,
+                'follow' => true,
+            ]);
+
+            return response()->json(['message' => 'User subscribed to Twitter chatbot']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        // Save the subscription to the database (assuming you have a "subscribers" table)
-        Subscriber::create([
-            'user_id' => $request->input('user_id'),
-        ]);
-
-        // Your controller logic
-        return response()->json(['message' => 'User subscribed to chat bot']);
     }
 
 }

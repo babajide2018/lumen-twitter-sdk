@@ -1,28 +1,28 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "User Subscription",
-        "description": "Your API description",
+        "title": "Communications Microservice - (Twitter channel)",
+        "description": "You need to write a REST API microservice. <br>\n    You need use Lumen + Swagger + Twitter SDK <br>\n    https://github.com/laravel/lumen.git <br>\n    https://github.com/DarkaOnLine/SwaggerLume <br>\n    https://github.com/atymic/twitter <br>\n    It is necessary to integrate Twitter SDK into our REST API microservice. <br>\n    We import one of the SDK to choose from those listed below. <br>\n    We implement all the logic as much as possible with the built-in functionality of Lumen",
         "contact": {
-            "name": "Your Name",
-            "url": "https://example.com",
-            "email": "contact@example.com"
+            "name": "Ojo Babajide Joshua",
+            "url": "https://geenius.zyrocs.com",
+            "email": "ojobabajide2018@gmail.com"
         },
         "license": {
             "name": "Your License",
-            "url": "https://example.com/license"
+            "url": "https://geenius.zyrocs.com"
         },
         "version": "1.0"
     },
     "paths": {
-        "/subscribe-channel": {
+        "/subscribe-to-channel": {
             "post": {
                 "tags": [
                     "Channel Subscriptions"
                 ],
                 "summary": "Subscribe users to a channel or chat",
                 "description": "Subscribe users to a channel or chat.",
-                "operationId": "0ddbce052401edc7b2b35c705f033ee3",
+                "operationId": "d9f2ee6b829ab941309343814be1e274",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -111,19 +111,22 @@
                 }
             }
         },
-        "/subscribe": {
+        "/subscribe-to-chatbot": {
             "post": {
                 "tags": [
-                    "Subscriptions"
+                    "Subscription"
                 ],
-                "summary": "Subscribe users to a chat bot",
-                "description": "Subscribe users to a chat bot.",
-                "operationId": "5e39171fb76a278500ff2c0aa029ce2d",
+                "summary": "Subscribe users to a Twitter chatbot",
+                "operationId": "subscribeToChatBot",
                 "requestBody": {
+                    "description": "User ID",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "user_id"
+                                ],
                                 "properties": {
                                     "user_id": {
                                         "type": "integer",
@@ -137,20 +140,23 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User subscribed to chat bot",
+                        "description": "User subscribed to Twitter chatbot",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "User subscribed to chat bot"
+                                            "example": "User subscribed to Twitter chatbot"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }

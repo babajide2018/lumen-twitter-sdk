@@ -2,12 +2,10 @@
 
 namespace App\Api\V1\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
-use Atymic\Twitter\Twitter as TwitterSDK;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
-
-class ChannelSubscription extends BaseController
+class ChannelSubscriptionController extends BaseController
 {
      /**
      * Subscribe users to a channel or chat.
@@ -18,7 +16,7 @@ class ChannelSubscription extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      * @OA\Post(
-     *     path="/subscribe-channel",
+     *     path="/subscribe-to-channel",
      *     summary="Subscribe users to a channel or chat",
      *     tags={"Channel Subscriptions"},
      *     @OA\RequestBody(

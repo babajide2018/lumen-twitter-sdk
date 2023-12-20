@@ -1,6 +1,11 @@
 <?php
 
 /** @var \Laravel\Lumen\Routing\Router $router */
+use App\Api\V1\Controllers\SubscriptionController;
+use App\Http\Controllers\Controller;
+use App\Api\V1\Controllers\ChannelSubscriptionController;
+use App\Api\V1\Controllers\ChannelSubscription;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +22,12 @@ $router->get('/swagger-ui', function () {
     return response()
         ->file(base_path('public'));
 });
+
+
+
+
+$router->post('/subscribe-to-channel', '\App\Api\V1\Controllers\ChannelSubscriptionController@subscribeToChannel');
+$router->post('/subscribe-to-chatbot', '\App\Api\V1\Controllers\ChatbotSubscriptionController@subscribeToChatbot');
+$router->post('/send-message', '\App\Api\V1\Controllers\MessageController@sendMessage');
+$router->post('/webhook', '\App\Api\V1\Controllers\WebhookController@handleWebhook');
+
