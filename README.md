@@ -59,6 +59,9 @@ Copy code
 {
   "message": "User subscribed to chat bot"
 }
+
+![Alt text](image-1.png)
+
 2. Subscribe Users to a Channel or Chat
 Endpoint: /subscribe-to-channel
 Method: POST
