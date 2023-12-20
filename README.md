@@ -30,6 +30,9 @@ php artisan swagger-lume:generate
 Access the Swagger UI at /api/documentation to explore the API.
 Database Migrations
 
+
+![Alt text](image.png)
+
 The database migrations are located in the database/migrations directory. Run the following command to apply migrations:
 
 bash
