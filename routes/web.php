@@ -33,6 +33,7 @@ $router->post('/subscribe-to-chatbot', '\App\Api\V1\Controllers\SubscriptionCont
 $router->post('/webhook', '\App\Api\V1\Controllers\WebhookController@handleWebhook');
 
 
+
 $router->get('/auth/twitter', '\App\Api\V1\Controllers\TwitterAuthController@getOAuthToken');
 $router->get('/twitter', '\App\Api\V1\Controllers\TwitterAuthController@getRequestToken');
 $router->get('/callback', '\App\Api\V1\Controllers\TwitterAuthController@handleCallback');
