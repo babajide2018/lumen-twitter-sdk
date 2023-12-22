@@ -5,6 +5,7 @@ namespace App\Api\V1\Controllers;
 
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Models\Subscriber;
 use Atymic\Twitter\Twitter as TwitterSDK;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -24,13 +25,12 @@ class MessageController extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      * @OA\Post(
-     *     path="/send-message",
+     *     path="/send-direct-message",
      *     summary="Send messages to subscribers",
      *     tags={"Messages"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="user_id", type="integer", example=889171962),
      *             @OA\Property(property="message", type="string", example="Hello, subscribers!"),
      *         )
      *     ),
@@ -44,34 +44,49 @@ class MessageController extends BaseController
      * )
      */
 
-    public function sendDirectMessage(Request $request, $userId)
-    {
+     public function sendDirectMessageToSubscribers(Request $request)
+{
+    // Your Twitter API credentials
+    $consumerKey = 'P1ovVmKEIW4alt5AGZQmdL7Zx';
+    $consumerSecret = '8v7pYz5MG8Iw8ibVHvq88MDOA3tmCZpS6yf2ipFjOMcACA0Vj8';
+    $access_token = '1735594427932884992-ghmuZ57SWLAlNQNBmHtdDYKNv5xQ8L';
+    $access_token_secret = 'b477x7NpBOpCi1RZ72VhZa5b85AYIHouInq306DSflbYv';
 
+    // Fetch user IDs from the subscribers table
+    $userIds = Subscriber::pluck('user_id')->toArray();
 
-        // Your Twitter API credentials
-        $consumerKey = 'P1ovVmKEIW4alt5AGZQmdL7Zx';
-        $consumerSecret = '8v7pYz5MG8Iw8ibVHvq88MDOA3tmCZpS6yf2ipFjOMcACA0Vj8';
-        $access_token = '1735594427932884992-ghmuZ57SWLAlNQNBmHtdDYKNv5xQ8L';
-        $access_token_secret = 'b477x7NpBOpCi1RZ72VhZa5b85AYIHouInq306DSflbYv';
+    // Initialize Twitter API client
+    $connection = new TwitterOAuth($consumerKey, $consumerSecret, $access_token, $access_token_secret);
 
-        // Initialize Twitter API client
+    // Message text from the request
+    $messageText = $request->input('message');
 
-        $connection = new TwitterOAuth($consumerKey, $consumerSecret, $access_token, $access_token_secret);
+    // Loop through each user ID and send a direct message
+    foreach ($userIds as $userId) {
         $data = [
             'event' => [
                 'type' => 'message_create',
                 'message_create' => [
                     'target' => [
-                        'recipient_id' => $userId
+                        'recipient_id' => $userId,
                     ],
                     'message_data' => [
-                        'text' => 'Hello World!'
-                    ]
-                ]
-            ]
+                        'text' => $messageText,
+                    ],
+                ],
+            ],
         ];
+
+        // Send the direct message
         $result = $connection->post('direct_messages/events/new', $data, true); // Note the true
 
-        return response()->json(['success', 'message sent successfuly']);
+        // Check for errors in the API response
+        if (isset($result->errors)) {
+            // Log the errors for debugging
+            Log::error('Twitter API Error:', ['errors' => $result->errors]);
+        }
     }
+
+    return response()->json(['success' => 'Message sent to all subscribers successfully']);
+}
 }

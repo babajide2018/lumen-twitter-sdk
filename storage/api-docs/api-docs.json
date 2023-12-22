@@ -63,24 +63,20 @@
                 }
             }
         },
-        "/send-message": {
+        "/send-direct-message": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Send messages to subscribers",
                 "description": "Send messages to subscribers.",
-                "operationId": "15424513e7fd7e1663c6dcb917639da3",
+                "operationId": "2fb77c06566c355128f1150183087772",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "user_id": {
-                                        "type": "integer",
-                                        "example": 889171962
-                                    },
                                     "message": {
                                         "type": "string",
                                         "example": "Hello, subscribers!"
