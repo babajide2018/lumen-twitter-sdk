@@ -51,8 +51,11 @@ Request Body:
 json
 Copy code
 {
-  "user_id": "80000000-8000-8000-8000-000000000001"
+  "user_id": "00000000001" (I subscribed some of my friends, about 2 users)
 }
+
+
+![Alt text](image-2.png)
 Response:
 json
 Copy code

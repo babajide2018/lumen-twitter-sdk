@@ -4,14 +4,18 @@
 namespace App\Api\V1\Controllers;
 
 
-use Laravel\Lumen\Routing\Controller as BaseController;
-use Illuminate\Http\Request;
+use Abraham\TwitterOAuth\TwitterOAuth;
 use Atymic\Twitter\Twitter as TwitterSDK;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
 
 class MessageController extends BaseController
 {
-     /**
+    /**
      * Send messages to subscribers.
      *
      * @param  Request  $request
@@ -26,7 +30,7 @@ class MessageController extends BaseController
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="user_id", type="integer", example=123),
+     *             @OA\Property(property="user_id", type="integer", example=889171962),
      *             @OA\Property(property="message", type="string", example="Hello, subscribers!"),
      *         )
      *     ),
@@ -39,9 +43,35 @@ class MessageController extends BaseController
      *     ),
      * )
      */
-    public function sendMessage(Request $request)
+
+    public function sendDirectMessage(Request $request, $userId)
     {
-        // Your controller logic
-        return response()->json(['message' => 'Message sent to subscribers']);
+
+
+        // Your Twitter API credentials
+        $consumerKey = 'P1ovVmKEIW4alt5AGZQmdL7Zx';
+        $consumerSecret = '8v7pYz5MG8Iw8ibVHvq88MDOA3tmCZpS6yf2ipFjOMcACA0Vj8';
+        $access_token = '1735594427932884992-ghmuZ57SWLAlNQNBmHtdDYKNv5xQ8L';
+        $access_token_secret = 'b477x7NpBOpCi1RZ72VhZa5b85AYIHouInq306DSflbYv';
+
+        // Initialize Twitter API client
+
+        $connection = new TwitterOAuth($consumerKey, $consumerSecret, $access_token, $access_token_secret);
+        $data = [
+            'event' => [
+                'type' => 'message_create',
+                'message_create' => [
+                    'target' => [
+                        'recipient_id' => $userId
+                    ],
+                    'message_data' => [
+                        'text' => 'Hello World!'
+                    ]
+                ]
+            ]
+        ];
+        $result = $connection->post('direct_messages/events/new', $data, true); // Note the true
+
+        return response()->json(['success', 'message sent successfuly']);
     }
 }

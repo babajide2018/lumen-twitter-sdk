@@ -2,9 +2,12 @@
 
 namespace App\Api\V1\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
-use Illuminate\Http\Request;
+use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Models\Subscriber;
+use Atymic\Twitter\ApiV1\Service\Twitter;
 use Atymic\Twitter\Twitter as TwitterSDK;
+use Illuminate\Http\Request;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
 
 
@@ -68,17 +71,25 @@ class SubscriptionController extends BaseController
         // Your Twitter subscription logic here
         try {
             // Initialize Twitter SDK
-            $twitter = new TwitterSDK([
-                'key' => env('TWITTER_API_KEY'),
-                'secret' => env('TWITTER_API_SECRET'),
-                'token' => env('TWITTER_ACCESS_TOKEN'),
-                'token_secret' => env('TWITTER_ACCESS_TOKEN_SECRET'),
-            ]);
+               // Your Twitter API credentials
+        $consumerKey = 'P1ovVmKEIW4alt5AGZQmdL7Zx';
+        $consumerSecret = '8v7pYz5MG8Iw8ibVHvq88MDOA3tmCZpS6yf2ipFjOMcACA0Vj8';
+        $access_token = '1735594427932884992-ghmuZ57SWLAlNQNBmHtdDYKNv5xQ8L';
+        $access_token_secret = 'b477x7NpBOpCi1RZ72VhZa5b85AYIHouInq306DSflbYv';
+
+        // Initialize Twitter API client
+
+        $connection = new TwitterOAuth($consumerKey, $consumerSecret, $access_token, $access_token_secret);
 
             // Subscribe user to the Twitter chatbot
-            $twitter->post('friendships/create', [
+            $connection->post('friendships/create', [
                 'user_id' => $userId,
                 'follow' => true,
+            ]);
+
+            //store the subscriber data in the database
+            Subscriber::create([
+                'user_id' => $userId
             ]);
 
             return response()->json(['message' => 'User subscribed to Twitter chatbot']);

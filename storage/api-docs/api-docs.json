@@ -79,7 +79,7 @@
                                 "properties": {
                                     "user_id": {
                                         "type": "integer",
-                                        "example": 123
+                                        "example": 889171962
                                     },
                                     "message": {
                                         "type": "string",

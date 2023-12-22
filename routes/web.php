@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Api\V1\Controllers\ChannelSubscriptionController;
 use App\Api\V1\Controllers\ChannelSubscription;
 use App\Api\V1\Controllers\TwitterAuthController;
+use Illuminate\Support\Facades\Redirect;
+
 
 
 /*
@@ -25,19 +27,18 @@ $router->get('/swagger-ui', function () {
 });
 
 
-
-
 $router->post('/subscribe-to-channel', '\App\Api\V1\Controllers\ChannelSubscriptionController@subscribeToChannel');
-$router->post('/subscribe-to-chatbot', '\App\Api\V1\Controllers\ChatbotSubscriptionController@subscribeToChatbot');
-$router->post('/send-message', '\App\Api\V1\Controllers\MessageController@sendMessage');
+$router->post('/subscribe-to-chatbot', '\App\Api\V1\Controllers\SubscriptionController@subscribeToChatbot');
+//$router->post('/send-message', '\App\Api\V1\Controllers\MessageController@sendMessage');
 $router->post('/webhook', '\App\Api\V1\Controllers\WebhookController@handleWebhook');
+
+
 
 $router->get('/auth/twitter', '\App\Api\V1\Controllers\TwitterAuthController@getOAuthToken');
 $router->get('/twitter', '\App\Api\V1\Controllers\TwitterAuthController@getRequestToken');
 $router->get('/callback', '\App\Api\V1\Controllers\TwitterAuthController@handleCallback');
 $router->get('/twitter-auth', '\App\Api\V1\Controllers\TwitterAuthController@getOAuthToken');
 $router->get('/initiate-twitter-auth', '\App\Api\V1\Controllers\TwitterAuthController@redirectToTwitterAuth');
-
-
+$router->post('/send-direct-message/{userId}', '\App\Api\V1\Controllers\MessageController@sendDirectMessage');
 
 
